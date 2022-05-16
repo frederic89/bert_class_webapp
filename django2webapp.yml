@@ -1,0 +1,48 @@
+name: django2webapp
+channels:
+  - defaults
+dependencies:
+  - ca-certificates=2022.4.26=hecd8cb5_0
+  - certifi=2020.6.20=pyhd3eb1b0_3
+  - libcxx=12.0.0=h2f01273_0
+  - libffi=3.3=hb1e8313_2
+  - ncurses=6.3=hca72f7f_2
+  - openssl=1.1.1n=hca72f7f_0
+  - python=3.6.13=h88f2d9e_0
+  - readline=8.1.2=hca72f7f_1
+  - sqlite=3.38.2=h707629a_0
+  - tk=8.6.11=h7bc2e8c_0
+  - wheel=0.37.1=pyhd3eb1b0_0
+  - xz=5.2.5=hca72f7f_1
+  - zlib=1.2.12=h4dc903c_2
+  - pip:
+    - absl-py==1.0.0
+    - asgiref==3.4.1
+    - astor==0.8.1
+    - bleach==1.5.0
+    - dataclasses==0.8
+    - django==3.2.13
+    - gast==0.5.3
+    - grpcio==1.46.0
+    - html5lib==0.9999999
+    - importlib-metadata==4.8.3
+    - joblib==1.1.0
+    - markdown==3.3.7
+    - numpy==1.16.4
+    - pip==21.3.1
+    - protobuf==3.19.4
+    - pytz==2022.1
+    - scikit-learn==0.24.2
+    - scipy==1.5.4
+    - setuptools==39.1.0
+    - six==1.16.0
+    - sklearn==0.0
+    - sqlparse==0.4.2
+    - tensorboard==1.9.0
+    - tensorflow==1.9.0
+    - termcolor==1.1.0
+    - threadpoolctl==3.1.0
+    - typing-extensions==4.1.1
+    - werkzeug==2.0.3
+    - zipp==3.6.0
+prefix: /Users/guanyongqing/opt/anaconda3/envs/django2webapp

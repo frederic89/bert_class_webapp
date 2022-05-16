@@ -1,0 +1,11 @@
+.form-inline {
+    width: 100%;
+}
+
+.form-inline .form-control {
+    width: 70%;
+}
+
+#img_div {
+    max-width: 480px
+}

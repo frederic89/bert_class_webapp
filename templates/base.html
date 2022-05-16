@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/mycss.css' %}" type="text/css">
+    <title>文本分类系统</title>
+</head>
+<body>
+<!--导航栏-->
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'start' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <div class="text-center">
+                <span class="navbar-brand mb-0 h1">基于TextCNN的文本分类模型</span>
+            </div>
+
+        </div>
+    </nav>
+</div>
+<br>
+<div class="container">
+    <div class="jumbotron">
+        <!--搜索区-->
+        <div id="serch">
+            <h3 class="display-8 text-center">请在搜索框中输入需要分类的文本
+            </h3>
+            <br>
+            <!--搜索框-->
+            <div class="row align-items-center col-auto">
+                <div class="col-sm-12">
+                    <form class="form-inline" method="post" action="{% url 'get_ans' %}">
+                        {% csrf_token %}
+                        <h5 class="display-10 text-danger">Number:&nbsp&nbsp</h5>
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                               name="input_text">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查询</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--答案展示区-->
+        <div id="answer" class="col-auto">
+            <hr class="my-4">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+<br>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+</body>
+</html>

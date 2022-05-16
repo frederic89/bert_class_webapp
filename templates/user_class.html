@@ -1,0 +1,89 @@
+{% extends 'user_base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% load static %}
+        <div class="col-md-4">
+            <img id="book_" class="img-thumbnail" src="{% static 'img/user.jpg' %}">
+        </div>
+        <div class="col-md-3">
+            <h5 class="display-5">您输入的文本信息：</h5>
+            <br>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ my_text }}
+            </p>
+        </div>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="display-5">预测耗时：</h5>
+                    <br>
+                    <div>
+                        <button type="button" class="btn btn-dark" disabled>耗时：{{ pre_time }}&nbsp;毫秒</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="display-5">文本分类结果：</h5>
+                    <br>
+                    {% if tiyu == 1 %}
+                    <div>
+                        <button type="button" class="btn btn-primary" disabled>体育</button>
+                    </div>
+                    <br>
+                    {% endif %}
+                    {% if caijing == 1 %}
+                    <div>
+                        <button type="button" class="btn btn-warning" disabled>财经</button>
+                    </div>
+                    <br>
+                    {% endif %}
+                    {% if fangchan == 1 %}
+                    <div>
+                        <button type="button" class="btn btn-info" disabled>房产</button>
+                    </div>
+                    <br>
+                    {% endif %}
+                    {% if jiaju == 1 %}
+                    <div>
+                        <button type="button" class="btn btn-danger" disabled>家居</button>
+                    </div>
+                    {% endif %}
+                    {% if jiaoyu == 1 %}
+                    <div>
+                        <button type="button" class="btn btn-warning" disabled>教育</button>
+                    </div>
+                    {% endif %}
+                    {% if keji == 1 %}
+                    <div>
+                        <button type="button" class="btn btn-dark active" disabled>科技</button>
+                    </div>
+                    <br>
+                    {% endif %}
+                    {% if shishang == 1 %}
+                    <div>
+                        <button type="button" class="btn btn-success" disabled>时尚</button>
+                    </div>
+                    <br>
+                    {% endif %}
+                    {% if shizheng == 1 %}
+                    <div>
+                        <button type="button" class="btn btn-secondary active" disabled>时政</button>
+                    </div>
+                    <br>
+                    {% endif %}
+                    {% if youxi == 1 %}
+                    <div>
+                        <button type="button" class="btn btn-primary" disabled>游戏</button>
+                    </div>
+                    {% endif %}
+                    {% if yule == 1 %}
+                    <div>
+                        <button type="button" class="btn btn-primary" disabled>娱乐</button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
