@@ -4,13 +4,13 @@
 
 ### 环境依赖
 
-Python版本：python3.6.13
+Python版本：python3.6.13  +  Tensorflow 1.9.0（CPU版本）
 
 1. 从Anaconda的YML环境文件建立项目环境
 
    conda env create -f django2webapp.yml
 
-   conda activate django2webapp.yml
+   conda activate django2webapp
 
 2. 从pip安装
 
@@ -32,13 +32,13 @@ Python版本：python3.6.13
 
 1. 网页运行：
 
-​	python3 manage.py runserver 8000
+   python3 manage.py runserver 8000
 
-​	打开http://127.0.0.1:8000 访问
+   打开http://127.0.0.1:8000 访问
 
 2. 另外提供命令行交互方式：
 
-​	python3 infer.py
+   python3 infer.py
 
 ### 参考
 
