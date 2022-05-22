@@ -4,6 +4,7 @@ import os
 import tensorflow as tf
 
 from bert import tokenization
+from webapp.text_model import *
 import numpy as np
 
 
@@ -54,7 +55,7 @@ class TextProcessor(object):
     """set labels"""
 
     def get_labels(self):
-        return ['体育', '财经', '房产', '家居', '教育', '科技', '时尚', '时政', '游戏', '娱乐']
+        return label_static
 
     """read file"""
 
@@ -130,7 +131,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
             label_id = label_map[example.label]
         except:
             label_id = None
-            # print("测试集标签名称或配置标签的名称存在错误，请检查！")
+            tf.logging.info("测试集标签名称或配置标签的名称存在错误，请检查！")
         if ex_index < 3:
             tf.logging.info("*** Example ***")
             tf.logging.info("guid: %s" % (example.guid))

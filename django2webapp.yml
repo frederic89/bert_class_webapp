@@ -1,4 +1,4 @@
-name: django2webapp
+name: bert_django2webapp
 channels:
   - defaults
 dependencies:
@@ -45,4 +45,4 @@ dependencies:
     - typing-extensions==4.1.1
     - werkzeug==2.0.3
     - zipp==3.6.0
-prefix: /Users/guanyongqing/opt/anaconda3/envs/django2webapp
+prefix: /Users/guanyongqing/opt/anaconda3/envs/bert_django2webapp

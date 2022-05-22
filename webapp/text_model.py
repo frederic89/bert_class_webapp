@@ -1,10 +1,22 @@
 import tensorflow as tf
 from bert import modeling
 
+label_static = [
+    '体育',
+    '财经',
+    '房产',
+    '家居',
+    '教育',
+    '科技',
+    '时尚',
+    '时政',
+    '游戏',
+    '娱乐'
+]
 
 class TextConfig():
     seq_length = 128  # max length of sentence
-    num_labels = 10  # number of labels
+    num_labels = len(label_static)  # number of labels
 
     num_filters = 128  # number of convolution kernel
     filter_sizes = [2, 3, 4]  # size of convolution kernel

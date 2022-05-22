@@ -44,7 +44,7 @@ def getResult(user_input_text):
     model = TextCNN(config)
     save_dir = os.path.join(config.output_dir, "checkpoints/textcnn")
     save_path = os.path.join(save_dir, 'best_validation')
-    label_list = ['体育', '财经', '房产', '家居', '教育', '科技', '时尚', '时政', '游戏', '娱乐']
+    label_list = label_static
     tokenizer = tokenization.FullTokenizer(vocab_file=config.vocab_file, do_lower_case=False)
 
     config.is_training = False
@@ -96,7 +96,7 @@ if __name__ == '__main__':
     model = TextCNN(config)
     save_dir = os.path.join(config.output_dir, "checkpoints/textcnn")
     save_path = os.path.join(save_dir, 'best_validation')
-    label_list = ['体育', '财经', '房产', '家居', '教育', '科技', '时尚', '时政', '游戏', '娱乐']
+    label_list = label_static
     tokenizer = tokenization.FullTokenizer(vocab_file=config.vocab_file, do_lower_case=False)
 
     config.is_training = False

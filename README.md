@@ -1,20 +1,21 @@
 # Django框架下的Bert文本分类平台
 
-基于bert的中文新闻分类平台
+——基于bert的中文新闻分类平台，详见参考2
+
+### 更新日志
+
+2022.5.22 将标签配置统一放于text_model.py中
 
 ### 环境依赖
 
-Python版本：python3.6.13  +  Tensorflow 1.9.0（CPU版本）
+Python版本：Python 3.6.13  +  Tensorflow 1.9.0（此为CPU版本，GPU版本tensorflow-gpu请自行调试）
 
-1. 从Anaconda的YML环境文件建立项目环境
+从pip安装依赖环境
 
-   conda env create -f django2webapp.yml
-
-   conda activate django2webapp
-
-2. 从pip安装
-
-   pip install -r requirements.txt
+```python
+	pip install -r requirements.txt
+```
+（注：如碰到具体版本有问题，请手动安装合适版本）
 
 ### 数据的训练
 
@@ -23,8 +24,19 @@ Python版本：python3.6.13  +  Tensorflow 1.9.0（CPU版本）
 2. 数据集是新闻数据集，涉及10个类别（体育、财经、房产、家居、教育、科技、时尚、时政、游戏、娱乐），下载链接：[https://pan.baidu.com/s/11AuC5g47rnsancf6nfKdiQ](https://pan.baidu.com/s/11AuC5g47rnsancf6nfKdiQ) 密码:1vdg。**注意**：请下载后请置于根目录下的corpus/cnews文件夹中（如没有路径，请照此新建）。
 
 3. 训练命令：
+```python
+	python text_run.py train
+```
+​	or   带重定向导出日志运行:  
+```python
+	python text_run.py train 2> train.txt
+```
+4. 测试命令：
 
-​	python text_run.py train
+```python
+	python text_run.py test 
+```
+
 
 ### 分类系统运行
 
@@ -39,6 +51,10 @@ Python版本：python3.6.13  +  Tensorflow 1.9.0（CPU版本）
 2. 另外提供命令行交互方式：
 
    python3 infer.py
+
+### Todo
+
+​	后期考虑针对小语料文本进行优化
 
 ### 参考
 
