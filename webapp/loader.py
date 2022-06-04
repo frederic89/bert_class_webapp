@@ -131,7 +131,8 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
             label_id = label_map[example.label]
         except:
             label_id = None
-            tf.logging.info("测试集标签名称或配置标签的名称存在错误，请检查！")
+            if label_id is None:
+                raise ValueError("语料库标签名或模型配置标签中名称存在错误，请检查是否一致！")
         if ex_index < 3:
             tf.logging.info("*** Example ***")
             tf.logging.info("guid: %s" % (example.guid))
