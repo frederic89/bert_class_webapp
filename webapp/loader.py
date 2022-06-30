@@ -1,7 +1,6 @@
 import collections
 import codecs
 import os
-import tensorflow as tf
 
 from bert import tokenization
 from webapp.text_model import *
@@ -48,7 +47,7 @@ class TextProcessor(object):
 
     """load pre examples"""
 
-    def get_pre_examples(self, data_dir):
+    def get_single_pre_example(self, data_dir):
         return self._create_examples(
             self._read_file(os.path.join(data_dir, "pre_test.tsv")), "test")
 
@@ -87,7 +86,8 @@ class TextProcessor(object):
 
 def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer):
     """
-    将所有的InputExamples样本数据转化成模型要输入的token形式，最后输出bert模型需要的四个变量；
+    将所有的InputExamples样本（在网页访问时返回一个测试样本）数据转化成模型要输入的token形式，
+    最后输出bert模型需要的四个变量，这四个变量打包存储在字典里，最终成为数组返回：
     input_ids：就是text_a(分类文本)在词库对应的token，按字符级；
     input_mask：bert模型mask训练的标记，都为1；
     segment_ids：句子标记，此场景只有text_a,都为0；

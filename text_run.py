@@ -102,7 +102,7 @@ def train():
         start = time.time()
         tf.logging.info('Epoch:%d' % (epoch + 1))
         for batch_ids, batch_mask, batch_segment, batch_label in batch_train:
-            print(batch_label) #打印每个批次的输入标签序号
+            print(batch_label)  # 打印每个批次的输入标签序号
             feed_dict = feed_data(batch_ids, batch_mask, batch_segment, batch_label, config.keep_prob)
             _, global_step, train_summaries, train_loss, train_accuracy = session.run([model.optim, model.global_step,
                                                                                        merged_summary, model.loss,
@@ -125,7 +125,7 @@ def train():
                 start = time.time()
 
             if global_step - last_improved > config.require_improvement:
-                tf.logging.info("No optimization over 1500 steps, stop training")
+                tf.logging.info("No optimization over 1500 steps, stop training") # TODO 1500
                 flag = True
                 break
         if flag:
@@ -194,7 +194,7 @@ def test():
     tf.logging.info(cm)
 
 
-def get_pre(final_model, label_list, tokenizer,session):
+def get_single_pre(final_model, label_list, tokenizer, session):
     """
     结果预测
     """
@@ -208,15 +208,17 @@ def get_pre(final_model, label_list, tokenizer,session):
         exit()
 
     tf.logging.info("*****************读取预测文件*****************")
-    test_examples = TextProcessor().get_pre_examples(config.data_dir)
-    test_data = convert_examples_to_features(test_examples, label_list, config.seq_length, tokenizer)
+    test_example = TextProcessor().get_single_pre_example(config.data_dir)
+    """single_test_data返回的是数组，里面的每个单元是字典"""
+    single_test_data = convert_examples_to_features(test_example, label_list, config.seq_length, tokenizer)
 
-    input_ids, input_mask, segment_ids = [], [], []
+    input_id, input_mask, segment_id = [], [], []
 
-    for features in test_data:
-        input_ids.append(features['input_ids'])
+    """重塑convert_examples_to_features的features结构，具体结构请见该函数"""
+    for features in single_test_data:
+        input_id.append(features['input_ids'])
         input_mask.append(features['input_mask'])
-        segment_ids.append(features['segment_ids'])
+        segment_id.append(features['segment_ids'])
 
     # config.is_training = False
     # session = tf.Session()
@@ -229,12 +231,22 @@ def get_pre(final_model, label_list, tokenizer,session):
     # msg = 'Test Loss: {0:>6.2}, Test Acc: {1:>7.2%}'
     # tf.logging.info(msg.format(test_loss, test_accuracy))
 
-    batch_size = config.batch_size
-    data_len = len(test_data)
-    num_batch = int((data_len - 1) / batch_size) + 1
-    y_test_cls = [features['label_ids'] for features in test_data]
-    y_pred_cls = np.zeros(shape=data_len, dtype=np.int32)
+    # batch_size = config.batch_size
+    # data_len = len(single_test_data)
+    # num_batch = int((data_len - 1) / batch_size) + 1
+    y_test_cls = [features['label_ids'] for features in single_test_data]
+    y_pred_cls = np.zeros(shape=1, dtype=np.int32)
 
+    feed_dict = {
+        final_model.input_ids: np.array(input_id),
+        final_model.input_mask: np.array(input_mask),
+        final_model.segment_ids: np.array(segment_id),
+        final_model.keep_prob: 1.0,
+    }
+    "final_model.y_pred_cls在text_model的self.y_pred_cls = tf.argmax(tf.nn.softmax(self.logits), 1)"
+    y_pred_cls_dict = session.run({'y_pred_class_array': final_model.y_pred_cls, 'y_pred_prob_array': final_model.prob},
+                                  feed_dict=feed_dict)
+    """
     for i in range(num_batch):
         start_id = i * batch_size
         end_id = min((i + 1) * batch_size, data_len)
@@ -245,9 +257,12 @@ def get_pre(final_model, label_list, tokenizer,session):
             final_model.keep_prob: 1.0,
         }
         y_pred_cls[start_id:end_id] = session.run(final_model.y_pred_cls, feed_dict=feed_dict)
-    pre_label = y_pred_cls[0]
+    """
+    pre_label = y_pred_cls_dict['y_pred_class_array'][0]
     print("预测index结果为：", pre_label)
-    return pre_label
+    # y_pred_cls_dict['y_pred_prob_array'] is like: array([[......]])
+    _prob = y_pred_cls_dict['y_pred_prob_array'].tolist()[0]  # numpy数组转换为列表，[0]再脱去嵌套的列表外壳
+    return pre_label, _prob
 
 
 if __name__ == '__main__':

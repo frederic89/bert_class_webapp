@@ -9,13 +9,13 @@ from webapp.loader import *
 import text_run as tr
 
 
-def write_to_tsv(data):
+def write_to_pre_test_tsv(data):
     """
     待预测信息写入
     """
     with open(r'corpus/cnews/pre_test.tsv', 'w', newline='', encoding='utf-8') as f:
         tsv_w = csv.writer(f, delimiter='\t')
-        tsv_w.writerow(['体育', data])
+        tsv_w.writerow([label_static[0], data])
 
 
 def get_model():
@@ -61,7 +61,7 @@ def get_ans(request):
         }
         return render(request, 'error.html', context)
     else:
-        if is_number(text):
+        if is_chinese_char(text):
             # 获取返回结果
             context = class_get(text)
             return render(request, 'user_class.html', context)
@@ -75,9 +75,9 @@ def get_ans(request):
 
 
 # 输入检测
-def is_number(s):
+def is_chinese_char(s):
+    """ 判断是否包含有中文汉字 """
     is_char = True
-    # 判断是否包含中文文本
     for i in s:
         if u'\u4e00' <= i <= u'\u9fff':
             is_char = is_char | True
@@ -88,10 +88,11 @@ def is_number(s):
 
 def class_get(in_text):
     # 写入文本
-    write_to_tsv(in_text)
+    write_to_pre_test_tsv(in_text)
     start_time = time.time()
-    # 模型预测
-    index = tr.get_pre(my_model, label_list, g_token, g_session)
+    # 模型预测, 返回概率
+    index, pre_class_prob = tr.get_single_pre(my_model, label_list, g_token, g_session)
+    print("各分类预测的概率为：", pre_class_prob)
     name = label_list[index]
     one_list = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     one_list[index] = 1
@@ -102,7 +103,7 @@ def class_get(in_text):
     r_data = {
         "my_text": in_text,
         "pre_time": pre_time,
-                "tiyu": one_list[0],
+        "tiyu": one_list[0],
         "caijing": one_list[1],
         "fangchan": one_list[2],
         "jiaju": one_list[3],
