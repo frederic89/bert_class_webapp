@@ -84,7 +84,7 @@ class TextProcessor(object):
         return examples
 
 
-def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer):
+def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer, cmd_infer=False):
     """
     将所有的InputExamples样本（在网页访问时返回一个测试样本）数据转化成模型要输入的token形式，
     最后输出bert模型需要的四个变量，这四个变量打包存储在字典里，最终成为数组返回：
@@ -92,6 +92,8 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
     input_mask：bert模型mask训练的标记，都为1；
     segment_ids：句子标记，此场景只有text_a,都为0；
     label_ids：文本标签对应的token，不是one_hot的形式；
+    cmd_infer: 在命令行推测模式时，cmd_infer为真可避免抛出定义的错误。因为，在命令行推测时，
+               ..convert_examples_to_features()内部的label_id值一直是None类型。
     """
     label_map = {}
     for (i, label) in enumerate(label_list):
@@ -131,8 +133,8 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
             label_id = label_map[example.label]
         except:
             label_id = None
-            if label_id is None:
-                raise ValueError("语料库标签名或模型配置标签中名称存在错误，请检查是否一致！")
+            if cmd_infer is False:
+                raise ValueError("语料库标签名或模型配置文件(text_model.py)中的标签名有错误，请检查是否一致！")
         if ex_index < 3:
             tf.logging.info("*** Example ***")
             tf.logging.info("guid: %s" % (example.guid))

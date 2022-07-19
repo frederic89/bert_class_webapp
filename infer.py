@@ -122,7 +122,7 @@ if __name__ == '__main__':
                 examples.append(
                     InputExample(guid=guid, text_a=text_a, text_b=None, label=None))
 
-            data = convert_examples_to_features(examples, label_list, config.seq_length, tokenizer)
+            data = convert_examples_to_features(examples, label_list, config.seq_length, tokenizer, cmd_infer=True)
             input_ids, input_mask, segment_ids = [], [], []
             for features in data:
                 input_ids.append(features['input_ids'])
