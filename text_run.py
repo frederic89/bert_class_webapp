@@ -2,7 +2,7 @@
 import time
 import sys
 from sklearn import metrics
-from webapp.text_model import *
+# from webapp.text_model import *
 from webapp.loader import *
 
 
@@ -146,9 +146,7 @@ def test():
     tf.logging.info("*****************Loading testing data*****************")
     test_examples = TextProcessor().get_test_examples(config.data_dir)
     test_data = convert_examples_to_features(test_examples, label_list, config.seq_length, tokenizer)
-
     input_ids, input_mask, segment_ids = [], [], []
-
     for features in test_data:
         input_ids.append(features['input_ids'])
         input_mask.append(features['input_mask'])
@@ -246,18 +244,6 @@ def get_single_pre(final_model, label_list, tokenizer, session):
     "final_model.y_pred_cls在text_model的self.y_pred_cls = tf.argmax(tf.nn.softmax(self.logits), 1)"
     y_pred_cls_dict = session.run({'y_pred_class_array': final_model.y_pred_cls, 'y_pred_prob_array': final_model.prob},
                                   feed_dict=feed_dict)
-    """
-    for i in range(num_batch):
-        start_id = i * batch_size
-        end_id = min((i + 1) * batch_size, data_len)
-        feed_dict = {
-            final_model.input_ids: np.array(input_ids[start_id:end_id]),
-            final_model.input_mask: np.array(input_mask[start_id:end_id]),
-            final_model.segment_ids: np.array(segment_ids[start_id:end_id]),
-            final_model.keep_prob: 1.0,
-        }
-        y_pred_cls[start_id:end_id] = session.run(final_model.y_pred_cls, feed_dict=feed_dict)
-    """
     pre_label = y_pred_cls_dict['y_pred_class_array'][0]
     print("预测index结果为：", pre_label)
     # y_pred_cls_dict['y_pred_prob_array'] is like: array([[......]])

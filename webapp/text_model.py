@@ -14,7 +14,8 @@ label_static = [
     '娱乐'
 ]
 
-class TextConfig():
+
+class TextConfig(object):
     seq_length = 128  # max length of sentence
     num_labels = len(label_static)  # number of labels
 
@@ -22,7 +23,9 @@ class TextConfig():
     filter_sizes = [2, 3, 4]  # size of convolution kernel
     hidden_dim = 128  # number of fully_connected layer units
 
-    keep_prob = 0.5  # droppout
+    keep_prob = 0.5  # dropout
+    seed = None  # dropout random seed
+
     lr = 5e-5  # learning rate
     lr_decay = 0.9  # learning rate decay
     clip = 5.0  # gradient clipping threshold
@@ -42,11 +45,15 @@ class TextConfig():
     init_checkpoint = 'bert_model/chinese_L-12_H-768_A-12/bert_model.ckpt'  # the path of bert model
 
 
-class TextCNN(object):
+class TextCNN:
 
-    def __init__(self, config):
-        '''获取超参数以及模型需要的传入的5个变量，input_ids，input_mask，segment_ids，labels，keep_prob'''
-        self.config = config
+    def __init__(self, config: object):
+        '''初始化，设计了用类————即名为config的配置属性集的真实打包对象(object)来新建模型实例'''
+
+        # 将真实的配置对象实例传入，做为初始化开端；同时self.config也是对象，可用“.”访问对象属性
+        self.config = config  
+
+        '''获取超参数以及模型需要的传入的若干变量：input_ids，input_mask，segment_ids，labels，keep_prob'''
         self.bert_config = modeling.BertConfig.from_json_file(self.config.bert_config_file)
 
         self.input_ids = tf.placeholder(tf.int64, shape=[None, self.config.seq_length], name='input_ids')
@@ -54,12 +61,15 @@ class TextCNN(object):
         self.segment_ids = tf.placeholder(tf.int64, shape=[None, self.config.seq_length], name='segment_ids')
         self.labels = tf.placeholder(tf.int64, shape=[None, ], name='labels')
         self.keep_prob = tf.placeholder(tf.float32, name='dropout')
+        self.seed = config.seed  # (for None)
+        # Or # self.seed = tf.placeholder(tf.int64, name='dropout') Todo
 
         self.global_step = tf.Variable(0, trainable=False, name='global_step')
 
         self.cnn()
 
     def cnn(self):
+        """TextCNN框架，绘制Tensorflow计算图的主函数"""
         '''获取bert模型最后的token-level形式的输出(get_sequence_output)，将此作为embedding_inputs，作为卷积的输入'''
         with tf.name_scope('bert'):
             bert_model = modeling.BertModel(
@@ -87,7 +97,7 @@ class TextCNN(object):
         '''加全连接层和dropuout层'''
         with tf.name_scope('fc'):
             fc = tf.layers.dense(outputs, self.config.hidden_dim, name='fc1')
-            fc = tf.nn.dropout(fc, self.keep_prob)
+            fc = tf.nn.dropout(fc, self.keep_prob, self.seed)  # 增加随机种子配置
             fc = tf.nn.relu(fc)
 
         '''logits'''
