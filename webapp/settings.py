@@ -116,8 +116,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+# 设置静态文件的路由（"并非实际地址"）
 STATIC_URL = '/static/'
-# 加入下面代码
+# static是地址路由前缀名
+# 只需STATIC_URL不够，还需要加入下面代码指定了系统真实的静态文件路径
 
-# 这个是设置静态文件夹目录的路径
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS设置了静态文件夹目录的实际路径
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+# 'static'是目录名，{% static %}可以直接解析
+# {% static %}解析 与 STATIC_URL 无关
