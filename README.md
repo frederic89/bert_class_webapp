@@ -54,9 +54,9 @@ pip3 install -r requirements.txt # 安装依赖包
 
 ### 数据的训练
 
-1. BERT模型的下载地址：[BERT-Base, Chinese](https://storage.googleapis.com/bert_models/2018_11_03/chinese_L-12_H-768_A-12.zip) : Chinese Simplified and Traditional, 12-layer, 768-hidden, 12-heads, 110M parameters。**注意**：下载后请解压，并置于根目录下的bert_model文件夹中，等待预备训练。（正确的语料路径应为/bert_model/chinese_L-12_H-768_A-12）
+1. BERT模型的下载地址：[BERT-Base, Chinese](https://storage.googleapis.com/bert_models/2018_11_03/chinese_L-12_H-768_A-12.zip) : Chinese Simplified and Traditional, 12-layer, 768-hidden, 12-heads, 110M parameters。**注意**：下载后请解压，并置于根目录下的bert_model文件夹中，等待预备训练。（正确的BERT模型路径应为/bert_model/chinese_L-12_H-768_A-12）
 
-2. 数据集是新闻数据集，涉及10个类别（体育、财经、房产、家居、教育、科技、时尚、时政、游戏、娱乐），下载链接：[https://pan.baidu.com/s/11AuC5g47rnsancf6nfKdiQ](https://pan.baidu.com/s/11AuC5g47rnsancf6nfKdiQ) 密码:1vdg。**注意**：请下载后请置于项目根目录下的corpus/cnews文件夹中（如没有路径，请照此新建）。
+2. 数据集是新闻数据集，涉及10个类别（体育、财经、房产、家居、教育、科技、时尚、时政、游戏、娱乐），下载链接：[https://pan.baidu.com/s/11AuC5g47rnsancf6nfKdiQ](https://pan.baidu.com/s/11AuC5g47rnsancf6nfKdiQ) 密码:1vdg。**注意**：请下载后请置于项目根目录下的/corpus/cnews文件夹中（如没有路径，请照此新建）。
 
 3. 训练分类模型：
 ```bash

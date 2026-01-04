@@ -6,6 +6,9 @@ result/tensorboard
 result/label
 /bert_model/chinese_L-12_H-768_A-12/*
 !/bert_model/chinese_L-12_H-768_A-12/bert_config.json
+.idea/
+
+nohup.out
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

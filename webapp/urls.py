@@ -18,6 +18,8 @@ from django.urls import path
 from webapp import views
 
 urlpatterns = [
+    # 原始管理后台
+    # path('admin/', admin.site.urls),
     # 里面留空，代表首页
     path('', views.start),
     # 返回首页

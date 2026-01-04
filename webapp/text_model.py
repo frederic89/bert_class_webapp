@@ -23,7 +23,7 @@ class TextConfig(object):
     filter_sizes = [2, 3, 4]  # size of convolution kernel
     hidden_dim = 128  # number of fully_connected layer units
 
-    keep_prob = 0.5  # dropout
+    keep_prob = 0.5  # drop-out
     seed = None  # dropout random seed
 
     lr = 5e-5  # learning rate
@@ -40,9 +40,9 @@ class TextConfig(object):
 
     output_dir = 'result'
     data_dir = 'corpus/cnews'  # the path of input_data file
-    vocab_file = 'bert_model/chinese_L-12_H-768_A-12/vocab.txt'  # the path of vocab file
-    bert_config_file = 'bert_model/chinese_L-12_H-768_A-12/bert_config.json'  # the path of bert_cofig file
-    init_checkpoint = 'bert_model/chinese_L-12_H-768_A-12/bert_model.ckpt'  # the path of bert model
+    vocab_file = '/Users/guanyongqing/dev/bert_SNERDI/bert_model/chinese_L-12_H-768_A-12/vocab.txt'  # the path of vocab file
+    bert_config_file = '/Users/guanyongqing/dev/bert_SNERDI/bert_model/chinese_L-12_H-768_A-12/bert_config.json'  # the path of bert_cofig file
+    init_checkpoint = '/Users/guanyongqing/dev/bert_SNERDI/bert_model/chinese_L-12_H-768_A-12/bert_model.ckpt'  # the path of bert model
 
 
 class TextCNN:
